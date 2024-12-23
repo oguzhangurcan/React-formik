@@ -1,22 +1,28 @@
-import React from "react";
+import React, { act } from "react";
 import { useFormik } from "formik";
 import { basicSchema } from "../schemas/index";
 
-const onSubmit = () => {
+const onSubmit = async(values, actions) => {
+  console.log(values);
+  console.log(actions);
+
+  await new Promise((r) => setTimeout(r, 1000));
+  actions.resetForm();
 
 };
 
 function GeneralForm() {
-  const { values, errors, handleChange, handleSubmit } = useFormik({
-    initialValues: {
-      email: "",
-      age: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: basicSchema,
-    onSubmit,
-  });
+  const { values, errors, isSubmitting, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        email: "",
+        age: "",
+        password: "",
+        confirmPassword: "",
+      },
+      validationSchema: basicSchema,
+      onSubmit,
+    });
 
   return (
     <form onSubmit={handleSubmit}>
@@ -66,9 +72,13 @@ function GeneralForm() {
           placeholder="Şifrenizi tekrar giriniz"
           className={errors.confirmPassword ? "input-error" : ""}
         />
-        {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+        {errors.confirmPassword && (
+          <p className="error">{errors.confirmPassword}</p>
+        )}
       </div>
-      <button type="submit">Kaydet</button>
+      <button disabled={isSubmitting} type="submit">
+        Kaydet
+      </button>
     </form>
   );
 }
