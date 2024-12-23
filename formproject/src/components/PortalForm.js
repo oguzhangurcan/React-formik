@@ -1,5 +1,8 @@
 import React from "react";
 import { Formik, Form } from "formik";
+import CustomInput from "./CustomInput";
+import { advancedSchema } from "../schemas";
+import CustomSelect from "./CustomSelect";
 
 const onSubmit = async (values, actions) => {
   console.log(values);
@@ -13,12 +16,25 @@ function PortalForm() {
   return (
     <>
       <Formik
-        initialValues={{ username: "", university: "red", isAccepted: false }}
+        initialValues={{ username: "", university: "", isAccepted: false }}
         onSubmit={onSubmit}
+        validationSchema={advancedSchema}
       >
         {() => (
           <Form>
-            <CustomInput/>
+            <CustomInput
+              label="Kullanıcı Adı"
+              name="username"
+              type="text"
+              placeholder="Kullanıcı Adınızı Giriniz"
+            />
+            <CustomSelect
+              label="Okulunuz"
+              name="university"
+              placeholder="Lütfen Okulunuzu Seçiniz"
+            >
+              <option value="">Okul Seçiniz</option>
+            </CustomSelect>
           </Form>
         )}
       </Formik>
