@@ -1,7 +1,7 @@
-import React, { act } from "react";
+import { React } from "react";
 import { useFormik } from "formik";
 import { basicSchema } from "../schemas/index";
-
+import { Link } from "react-router-dom";
 const onSubmit = async(values, actions) => {
   console.log(values);
   console.log(actions);
@@ -79,6 +79,8 @@ function GeneralForm() {
       <button disabled={isSubmitting} type="submit">
         Kaydet
       </button>
+      <Link className="formLink" to="/portal">
+        Portal formuna git</Link>
     </form>
   );
 }
